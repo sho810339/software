@@ -1,0 +1,3 @@
+{
+  "message": "Attendance updated successfully"
+}

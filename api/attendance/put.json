@@ -2,6 +2,7 @@
 //  PUT /api/attendance/:id
 //  PUT /api/attendance/123
 //  請求體（JSON 格式）：
+
 {
   "status": "resting",   // 新狀態
   "timeStart": {

@@ -1,3 +1,7 @@
+// 請求格式：
+// DELETE /api/attendance/:id
+// DELETE /api/attendance/123
+
 {
   "message": "Attendance deleted successfully"
 }

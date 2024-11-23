@@ -32,6 +32,20 @@ const addWorkLog = async (req, res) => {
       return res.status(404).json({ error: '找不到對應的船員' });
     }
 
+     // 計算當日已登記的總工時
+    const existingLogs = await Attendance.findAll({
+      where: { Worker_id: workerId, date },
+    });
+    const totalHoursToday = existingLogs.reduce((sum, log) => sum + log.duration, 0) + duration;
+
+    // 設定每日工時上限
+    const maxHoursPerDay = 8;
+    let alertMessage = null;
+
+    if (totalHoursToday > maxHoursPerDay) {
+      alertMessage = 注意：該船員當日總工時已超過 ${maxHoursPerDay} 小時（目前總工時：${totalHoursToday} 小時）。;
+    }
+
     // 新增出勤記錄
     const workLog = await Attendance.create({
       Worker_id: workerId,

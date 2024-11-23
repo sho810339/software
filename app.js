@@ -5,7 +5,7 @@ const signinRoutes = require('./routes/signinRoutes');
 const captainRoutes = require('./routes/captainRoutes');
 const workerRoutes = require('./routes/workerRoutes');
 const alertRoutes = require('./routes/alertRoutes');
-const { sequelize } = require('./config/database'); // 資料庫連線
+const sequelize = require('./config/database'); // 資料庫連線
 
 const app = express();
 

@@ -1,5 +1,0 @@
-{
-  "message": "Login successful",
-  "token": "token_here",
-  "role": "crew"  // 或其他角色，例如 captain, admin
-}

@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 // 建立資料庫連線
+// password 改成自己所設定的密碼
 const sequelize = new Sequelize('fishing_db', 'root', 'password', {
   host: 'localhost',        // 資料庫主機位址
   dialect: 'mysql',         // 使用 MySQL 資料庫

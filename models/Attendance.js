@@ -1,28 +1,55 @@
-const { Sequelize } = require('sequelize');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database'); // 載入資料庫配置
 
-// 建立資料庫連線
-const sequelize = new Sequelize('fishing_db', 'root', 'password', {
-  host: 'localhost',        // 資料庫主機位址
-  dialect: 'mysql',         // 使用 MySQL 資料庫
-  logging: false,           // 關閉 Sequelize 的 SQL 日誌（選填）
-  pool: {                   // 連線池設定（選填）
-    max: 5,                 // 最大連線數
-    min: 0,                 // 最小連線數
-    acquire: 30000,         // 連線超時時間（毫秒）
-    idle: 10000             // 釋放連線的閒置時間（毫秒）
+const Attendance = sequelize.define('Attendance', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+    comment: '主鍵'
+  },
+  worker_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    comment: '員工編號'
+  },
+  date: {
+    type: DataTypes.DATEONLY,
+    allowNull: false,
+    comment: '日期'
+  },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isIn: [['working', 'resting', 'dining']]
+    },
+    comment: '狀態'
+  },
+  timeStart: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    comment: '開始時刻（24小時制）'
+  },
+  timeEnd: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    comment: '結束時刻（24小時制）'
+  },
+  duration: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+    comment: '時長（小時）'
+  },
+  comments: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    comment: '備註'
   }
+}, {
+  tableName: 'attendance', // 指定資料表名稱
+  timestamps: true
 });
 
-// 測試資料庫連線
-const testConnection = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('資料庫連線成功');
-  } catch (error) {
-    console.error('資料庫連線失敗:', error);
-  }
-};
-
-testConnection(); // 測試連線是否成功
-
-module.exports = sequelize;
+module.exports = Attendance;

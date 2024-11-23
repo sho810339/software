@@ -29,12 +29,12 @@ const Attendance = sequelize.define('Attendance', {
   },
   timeStart: {
     type: DataTypes.FLOAT,
-    allowNull: false,
+    allowNull: true,
     comment: '開始時刻（24小時制）'
   },
   timeEnd: {
     type: DataTypes.FLOAT,
-    allowNull: false,
+    allowNull: true,
     comment: '結束時刻（24小時制）'
   },
   duration: {

@@ -14,16 +14,4 @@ const sequelize = new Sequelize('fishing_db', 'root', 'password', {
   }
 });
 
-// 測試資料庫連線
-const testConnection = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('資料庫連線成功');
-  } catch (error) {
-    console.error('資料庫連線失敗:', error);
-  }
-};
-
-testConnection(); // 測試連線是否成功
-
 module.exports = sequelize;

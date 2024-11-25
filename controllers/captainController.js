@@ -43,7 +43,7 @@ const addWorkLog = async (req, res) => {
     let alertMessage = null;
 
     if (totalHoursToday > maxHoursPerDay) {
-      alertMessage = 注意：該船員當日總工時已超過 ${maxHoursPerDay} 小時（目前總工時：${totalHoursToday} 小時）。;
+      alertMessage = '注意：該船員當日總工時已超過 ${maxHoursPerDay} 小時（目前總工時：${totalHoursToday} 小時）。';
     }
 
     // 新增出勤記錄

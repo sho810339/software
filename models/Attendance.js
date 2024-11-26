@@ -49,7 +49,26 @@ const Attendance = sequelize.define('Attendance', {
   }
 }, {
   tableName: 'attendance', // 指定資料表名稱
-  timestamps: true
+  timestamps: true,
+  hooks: {
+    beforeCreate: (attendance) => {
+      // 如果有值則計算，否則設為 null
+      if (attendance.timeStart != null && attendance.timeEnd != null) {
+        attendance.duration = attendance.timeEnd - attendance.timeStart;
+      } else {
+        attendance.duration = null; // 無法計算則設為 null
+      }
+    },
+    beforeUpdate: (attendance) => {
+      // 同步更新時也重新計算 duration
+      if (attendance.timeStart != null && attendance.timeEnd != null) {
+        attendance.duration = attendance.timeEnd - attendance.timeStart;
+      } else {
+        attendance.duration = null; // 無法計算則設為 null
+      }
+    },
+  },
 });
 
 module.exports = Attendance;
+

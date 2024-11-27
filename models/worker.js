@@ -2,13 +2,10 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database'); // 載入資料庫配置
 
 const Worker = sequelize.define('Worker', {
-  id: {
+  worker_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-  },  //修改!!!!!!
-  worker_id: {
-    type: DataTypes.INTEGER,
     allowNull: false, // 必填
     unique: true, // 確保唯一
     comment: '員工編號',

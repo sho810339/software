@@ -53,6 +53,11 @@ const Worker = sequelize.define('Worker', {
     allowNull: false, // 必填
     comment: '工種',
   },
+  profilePhoto: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    comment: '照片的文件路徑'
+  },
 }, {
   tableName: 'crew_members', // 資料表名稱
   timestamps: true, // 自動生成 createdAt 和 updatedAt 欄位

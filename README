@@ -12,25 +12,37 @@ project/
 │   ├── WorkerEditController.js  
 │   ├── WorkerPageController.js 
 ├── models/                  # 資料層
-│   ├── Worker.js          
-│   ├── Attendance.js    
-│   ├── Login.js             
-│   ├── Notification.js  
-│   ├── Report.js  
+│   ├── index.js          
+│   ├── crew_members.js          
+│   ├── work_hours.js    
+│   ├── user_login.js             
+│   ├── notification.js  
+│   ├── report.js  
 ├── config/                  # 配置
 │   ├── database.js          # 資料庫連線設定
 
 
-修改：
+1203修改：
 1. CT api1修改
 3. login password 修改為 pattern
 4. WorkerPageController api2修改，本來使用舊版格式
 5. WorkerPageController api4新增預設check=1 (所以Report表中的check是啥?)
 
+1205修改：
+1. 把model的file name跟變數名稱改成跟database相同
+2. 修改seed.js內測試資料
+3. CTManagementController.js裡的workerIDs改成陣列
+4. crew_members.js的worker_id改成自動增加(假設船長已經內建在資料庫且id = 0)
 
-測試流程：
+1203測試流程：
 1. node sync.js (創建空的table，也可以用來重設table)
 2. node seed.js (給空的table新增一些資料)
 3. node app.js
 4. 要用mysql worckbench的話可以匯入fisherman.sql，方便測試
 5. 要用postman的話我有弄好一個workspace然後用email邀請你們
+
+1205測試流程：
+1. 對MYSQL workbench或cmd輸入fishman_db_design.sql的所有指令(直接複製貼上就可)
+2. node seed.js
+3. node app.js
+4. 用postman測所有指令 

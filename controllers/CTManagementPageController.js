@@ -1,6 +1,6 @@
-const Attendance = require('../models/Attendance'); // 出勤記錄模型
-const Worker = require('../models/Worker'); // 船員模型
-const Notification = require('../models/Notification'); // 載入通知模型
+const Attendance = require('../models/work_hours'); // 出勤記錄模型
+const Worker = require('../models/crew_members'); // 船員模型
+const Notification = require('../models/notification'); // 載入通知模型
 
 // api1()：在開啟app時取得員工資料(不含員工當日工時)	
 const getEmployees = async (req, res) => {
@@ -70,12 +70,19 @@ const registerWorkHours = async (req, res) => {
     const { workerIDs, updateWorkHours, date } = req.body;  // 假設這些資料是透過 body 傳遞
 
     try {
-        // 驗證輸入
-        if (!Array.isArray(workerIDs) || !Array.isArray(updateWorkHours)) {
-            return res.status(400).json({ status: 0, message: '無效的輸入，workerIDs 和 updateWorkHours 必須為陣列' });
+        console.log(req.body);
+        console.log('workerIDs:', workerIDs);
+        console.log('updateWorkHours:', updateWorkHours);
+        console.log('date:', date);
+        
+        // 驗證 workerIDs 是否為陣列且不為空
+        if (!Array.isArray(workerIDs) || workerIDs.length === 0) {
+            return res.status(400).json({ message: 'workerIDs 必須為非空陣列' });
         }
-        if (workerIDs.length === 0 || updateWorkHours.length !== 48) {
-            return res.status(400).json({ status: 0, message: 'workerIDs 不可為空，updateWorkHours 必須為大小 48 的陣列' });
+
+        // 驗證 updateWorkHours 是否為長度 48 的陣列
+        if (!Array.isArray(updateWorkHours) || updateWorkHours.length !== 48) {
+            return res.status(400).json({ message: 'updateWorkHours 必須為大小 48 的陣列' });
         }
         // 驗證 updateWorkHours 中的值是否有效
         if (!updateWorkHours.every(hour => [0, 1, 2].includes(hour))) {
@@ -108,7 +115,8 @@ const registerWorkHours = async (req, res) => {
                 date,
                 status: statusString,
                 duration: workingCounts,
-                profilePhoto:profilePhoto
+                profilePhoto: profilePhoto,
+                check: 0
             });
             
 

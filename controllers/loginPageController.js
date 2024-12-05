@@ -1,6 +1,6 @@
-const Login = require('../models/Login');
+const Login = require('../models/user_login');
 
-// api1(username, passport)：登入功能
+// api1(username, pattern)：登入功能
 const login = async (req, res) => {
     const { username, pattern } = req.body;
 

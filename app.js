@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const sequelize = require('./config/database'); // 資料庫連線
 
 const CTManagementPageRoutes = require('./routes/CTManagementPageRoutes');
@@ -11,8 +10,8 @@ const workerPageRoutes = require('./routes/workerPageRoutes');
 const app = express();
 
 // 中間件
-app.use(bodyParser.json());
-
+app.use(express.json());
+ 
 // 路由設定
 app.use('/api/CTManagementPage', CTManagementPageRoutes);
 app.use('/api/loginPage', loginPageRoutes);

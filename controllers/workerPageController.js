@@ -1,7 +1,7 @@
 const { Op } = require('sequelize');
-const Report = require('../models/Report');
-const Worker = require('../models/Worker');
-const Attendance = require('../models/Attendance');
+const Report = require('../models/report');
+const Worker = require('../models/crew_members');
+const Attendance = require('../models/work_hours');
 const { createReportNotification } = require('./CTManagementPageController');
 
 // API 1: 獲取所有船員的基本資訊

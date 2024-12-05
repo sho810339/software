@@ -1,4 +1,4 @@
-const Worker = require('../models/Worker');
+const Worker = require('../models/crew_members');
 
 
 // api1()：查詢船員簡易資訊
@@ -76,6 +76,13 @@ const getWorkersByJobTitle = async (req, res) => {
 // api3：新增員工
 const addWorker = async (req, res) => {
   const { name, age, country, passport_number, job_title, profilePhoto } = req.body;
+  console.log(req.body);
+  if (Array.isArray(req.body)) {
+    return res.status(400).json({
+      error: '請提供單一物件，而非陣列',
+      details: 'API 僅支援一次處理一個員工資料。請勿傳送陣列。',
+    });
+  }
 
   // 驗證輸入資料
   if (!name || !age || !country || !passport_number || !job_title) {

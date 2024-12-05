@@ -33,7 +33,7 @@ const Report = sequelize.define('Report', {
     comment: '異常描述，問題詳細描述',
   },
 }, {
-  tableName: 'reports', // 資料表名稱
+  tableName: 'report', // 資料表名稱
   timestamps: true, // 自動生成 createdAt 和 updatedAt 欄位
 });
 

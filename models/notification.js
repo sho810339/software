@@ -38,7 +38,7 @@ const Notification = sequelize.define('Notification', {
     comment: '通知最後更新時間',
   },
 }, {
-  tableName: 'notifications', // 資料表名稱
+  tableName: 'notification', // 資料表名稱
   timestamps: true, // 自動生成 createdAt 和 updatedAt 欄位
 });
 

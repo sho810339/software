@@ -73,7 +73,9 @@ CREATE TABLE `report`(
     `check` TINYINT(1) NOT NULL, -- 狀態確認
     `worker_id` INT NOT NULL, -- 員工編號
     `date` DATE NOT NULL, -- 日期
-    `issue_description` TEXT NOT NULL -- 詳細問題描述
+    `issue_description` TEXT NOT NULL, -- 詳細問題描述
+    `createdAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 資料插入時間
+    `updatedAt` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP -- 資料更新時間
     /*FOREIGN KEY (`worker_id`) REFERENCES `crew_members`(`worker_id`) -- 連結到`crew_members`表中的`worker_id`
     ON DELETE CASCADE -- 當對應的漁工刪除時，刪除相關工作時數記錄
     worker_id設為unique的話，一張表只能出現一次*/

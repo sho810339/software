@@ -1,3 +1,4 @@
+const { sequelize } = require('../config/database'); 
 const Worker = require('../models/crew_members');
 
 

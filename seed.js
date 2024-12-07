@@ -6,6 +6,15 @@ async function seed() {
     // 插入 'crew_members' 資料表
     await crew_members.bulkCreate([
       {
+        worker_id: 0, // 船長的編號為 0
+        name: 'Captain Jack',
+        age: 40,
+        country: 'UK',
+        passport_number: 'C12345678',
+        job_title: 'captain',
+        profilePhoto: '/path/photo3.jpg',
+      },
+      {
         worker_id: 1, // 員工編號
         name: 'John Doe',
         age: 30,
@@ -22,15 +31,6 @@ async function seed() {
         passport_number: 'B98765432',
         job_title: 'chef',
         profilePhoto: '/path/photo2.jpg',
-      },
-      {
-        worker_id: 0, // 船長的編號為 0
-        name: 'Captain Jack',
-        age: 40,
-        country: 'UK',
-        passport_number: 'C12345678',
-        job_title: 'captain',
-        profilePhoto: '/path/photo3.jpg',
       }
     ]);
     console.log("Crew members data seeded successfully!");

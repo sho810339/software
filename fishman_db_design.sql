@@ -3,7 +3,7 @@ SHOW DATABASES;
 USE `fisherman`;
 
 CREATE TABLE `crew_members` (
-    `worker_id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,  -- 員工編號，船長為0
+    `worker_id` INT PRIMARY KEY NOT NULL,  -- 員工編號，船長為0
     `name` VARCHAR(100) NOT NULL, -- 名
     `age` INT CHECK (age > 0 AND age <= 120), -- 年齡，正數，合理範圍1~120
     `country` VARCHAR(100) NOT NULL, -- 國籍

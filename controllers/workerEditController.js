@@ -119,8 +119,16 @@ const addWorker = async (req, res) => {
       });
     }
 
+    // 找到目前最大的 worker_id
+    const maxWorker = await Worker.findOne({
+      attributes: [[sequelize.fn('MAX', sequelize.col('worker_id')), 'maxWorkerId']],
+      raw: true,
+    });
+
+    const newWorkerId = (maxWorker.maxWorkerId || 0) + 1;
+
     //新增
-    const newWorker = await Worker.create({ name, age, country, passport_number, job_title , profilePhoto});
+    const newWorker = await Worker.create({ worker_id: newWorkerId, name, age, country, passport_number, job_title , profilePhoto});
 
     res.json({ message: '新增船員成功', newWorker });
 

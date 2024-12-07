@@ -1,6 +1,9 @@
 整體Structure：
 project/
 ├── app.js                   # 主應用入口
+├── uploads/                 # 放圖片的資料夾
+│   ├── profile/    
+│   ├── signature/    
 ├── routes/                  # 路由層
 │   ├── CTManagementPageRoutes.js    
 │   ├── loginPageRoutes.js    

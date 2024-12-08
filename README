@@ -56,6 +56,13 @@ project/
 1.直接跑app.js就可以蓋好資料庫
 2.用下面的API對照表測api功能
 
+1208新增大頭照功能(目前只做addWorker)：
+1.修改workerEdit中的addWorker。
+2.修改workerEditRoute中的addWorker的route
+3.增加middlewares/uploadProfile.js
+4.新增功能描述：可以在addWorker時傳入圖片檔，系統會把圖片放到uploads/profile並把對應路徑加到資料庫。
+5.測試流程：使用postman時要選form-data(之前是選raw)，profilePhoto可以用圖片檔。
+
 API對照表：
 輸入對應api就可以使用功能ㄌ
 https://docs.google.com/spreadsheets/d/1XCQsYwHWfLbnaOu_gorcbwlN0wf5KYy-0DAqbuIg_5g/edit?usp=sharing

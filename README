@@ -4,6 +4,8 @@ project/
 ├── uploads/                 # 放圖片的資料夾
 │   ├── profile/    
 │   ├── signature/    
+├── middlewares/             # 中間層
+│   ├── uploadProflie.js/    
 ├── routes/                  # 路由層
 │   ├── CTManagementPageRoutes.js    
 │   ├── loginPageRoutes.js    

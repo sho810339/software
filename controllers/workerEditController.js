@@ -76,8 +76,9 @@ const getWorkersByJobTitle = async (req, res) => {
 
 // api3：新增員工
 const addWorker = async (req, res) => {
-  const { name, age, country, passport_number, job_title, profilePhoto } = req.body;
+  const { name, age, country, passport_number, job_title } = req.body;
   console.log(req.body);
+  const profilePhoto = req.file ? req.file.path : null; // 上傳文件的路徑
   if (Array.isArray(req.body)) {
     return res.status(400).json({
       error: '請提供單一物件，而非陣列',

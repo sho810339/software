@@ -12,25 +12,6 @@ const getEmployees = async (req, res) => {
     }
 };
 
-/*
-const getEmployees = async (req, res) => {
-    try {
-        const employees = await Worker.findAll({
-            attributes: [
-                'worker_id',
-                [sequelize.fn('CONCAT', sequelize.col('given_name'), ' ', sequelize.col('family_name')), 'worker_name'], // 合併名字
-                ['job_title', 'working_type'], // 工種
-                ['profilePhoto', 'worker_pic'] // 大頭貼
-            ]
-        });  // 查詢所有員工資料，排除工時
-        res.json(employees);
-    } catch (error) {
-        res.status(500).json({ message: '伺服器錯誤', error: error.message });
-    }
-};
-*/
-
-
 // api2(string date)：取得指定日期所有員工工時
 const getWorkHoursByDate = async (req, res) => {
     const { date } = req.params;  // 假設日期透過參數傳遞

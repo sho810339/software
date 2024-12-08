@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // 載入資料庫配置
+const { sequelize } = require('../config/database'); // 載入資料庫配置
 
 const Attendance = sequelize.define('Attendance', {
   id: {

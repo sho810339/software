@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // 載入資料庫配置
+const { sequelize } = require('../config/database'); // 載入資料庫配置
 
 const Worker = sequelize.define('Worker', {
   worker_id: {

@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // 資料庫連線配置
+const { sequelize } = require('../config/database'); // 資料庫連線配置
 
 const Login = sequelize.define('Login', {
   username: {

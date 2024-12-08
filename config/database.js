@@ -1,8 +1,9 @@
 const { Sequelize } = require('sequelize');
+const fs = require('fs');
 
 // 建立資料庫連線
 // fisherman / root / password 分別改成自己所設定的資料庫名稱/帳號/密碼
-const sequelize = new Sequelize('fisherman', 'root', 'password', {
+const sequelize = new Sequelize('mysql', 'root', 'password', {
   host: 'localhost',        // 資料庫主機位址
   dialect: 'mysql',         // 使用 MySQL 資料庫
   logging: false,           // 關閉 Sequelize 的 SQL 日誌（選填）
@@ -13,5 +14,75 @@ const sequelize = new Sequelize('fisherman', 'root', 'password', {
     idle: 10000             // 釋放連線的閒置時間（毫秒）
   }
 });
+// 初始化資料庫
+async function initializeDatabase(sqlFilePath) {
+  try {
+    console.log('嘗試建立資料庫...');
 
-module.exports = sequelize;
+    // 先建立初始連線到 MySQL
+    await sequelize.authenticate();
+    console.log('資料庫連線成功！');
+
+    // 創建資料庫（如果尚未存在）
+    await sequelize.query('CREATE DATABASE IF NOT EXISTS fisherman');
+    console.log('資料庫已創建或已存在');
+
+    // 重新連接到剛創建的 'fisherman' 資料庫
+    const sequelizeNew = new Sequelize('fisherman', 'root', 'password', {
+      host: 'localhost',
+      dialect: 'mysql',
+      logging: false,
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+      }
+    });
+
+    // 讀取並執行 SQL 文件來創建資料表
+    const sql = fs.readFileSync(sqlFilePath, 'utf-8');
+    const statements = sql.split(';').map(stmt => stmt.trim()).filter(Boolean);
+    
+    for (const statement of statements) {
+      console.log(statement);
+      await sequelize.query(statement);
+    }
+
+    console.log('資料庫初始化完成！');
+  } catch (error) {
+    console.error('資料庫初始化失敗:', error);
+    throw error;
+  }
+}
+
+// 插入初始資料
+async function seedInitialData() {
+  try {
+    const Worker = require('../models/crew_members'); // 假設您有 crew_members 模型
+
+    const initialWorkers = [
+      {
+        worker_id: 0,
+        name: 'Captain Jack',
+        age: 40,
+        country: 'USA',
+        passport_number: 'A12345678',
+        job_title: 'captain',
+        profilePhoto: '../uploads/profile/test.heic',
+      },
+    ];
+
+      for (const worker of initialWorkers) {
+        await Worker.findOrCreate({
+          where: { passport_number: worker.passport_number },
+          defaults: worker,
+        });
+      }
+      console.log('初始資料插入成功！');
+    } catch (error) {
+      console.error('插入初始資料失敗:', error);
+  }
+}
+
+module.exports = { sequelize, initializeDatabase, seedInitialData };

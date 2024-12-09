@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const upload = require('../middlewares/uploadProfile'); // 引入上傳中間件
+const uploadProfile = require('../middlewares/uploadProfile'); // 引入上傳中間件
 
 const { 
     getProfile, 

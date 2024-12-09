@@ -1,4 +1,5 @@
-整體Structure：
+----------------------------------------------整體Structure----------------------------------------------
+
 project/
 ├── app.js                   # 主應用入口
 ├── uploads/                 # 放圖片的資料夾
@@ -26,18 +27,21 @@ project/
 ├── config/                  # 配置
 │   ├── database.js          # 資料庫連線設定
 
+----------------------------------------------測試流程----------------------------------------------
 
-1203修改：
-1. CT api1修改
-3. login password 修改為 pattern
-4. WorkerPageController api2修改，本來使用舊版格式
-5. WorkerPageController api4新增預設check=1 (所以Report表中的check是啥?)
+API對照表：
+輸入對應api就可以使用功能ㄌ
+https://docs.google.com/spreadsheets/d/1XCQsYwHWfLbnaOu_gorcbwlN0wf5KYy-0DAqbuIg_5g/edit?usp=sharing
 
-1205修改：
-1. 把model的file name跟變數名稱改成跟database相同
-2. 修改seed.js內測試資料
-3. CTManagementController.js裡的workerIDs改成陣列
-4. crew_members.js的worker_id改成自動增加(假設船長已經內建在資料庫且id = 0)
+1208測試流程：
+1.直接跑app.js就可以蓋好資料庫
+2.用下面的API對照表測api功能
+
+1205測試流程：
+1. 對MYSQL workbench或cmd輸入fishman_db_design.sql的所有指令(直接複製貼上就可)
+2. node seed.js
+3. node app.js
+4. 用postman測所有指令 
 
 1203測試流程：
 1. node sync.js (創建空的table，也可以用來重設table)
@@ -46,15 +50,7 @@ project/
 4. 要用mysql worckbench的話可以匯入fisherman.sql，方便測試
 5. 要用postman的話我有弄好一個workspace然後用email邀請你們
 
-1205測試流程：
-1. 對MYSQL workbench或cmd輸入fishman_db_design.sql的所有指令(直接複製貼上就可)
-2. node seed.js
-3. node app.js
-4. 用postman測所有指令 
-
-1208測試流程：
-1.直接跑app.js就可以蓋好資料庫
-2.用下面的API對照表測api功能
+----------------------------------------------修改紀錄----------------------------------------------
 
 1208新增大頭照功能(目前只做addWorker)：
 1.修改workerEdit中的addWorker。
@@ -63,6 +59,14 @@ project/
 4.新增功能描述：可以在addWorker時傳入圖片檔，系統會把圖片放到uploads/profile並把對應路徑加到資料庫。
 5.測試流程：使用postman時要選form-data(之前是選raw)，profilePhoto可以用圖片檔。
 
-API對照表：
-輸入對應api就可以使用功能ㄌ
-https://docs.google.com/spreadsheets/d/1XCQsYwHWfLbnaOu_gorcbwlN0wf5KYy-0DAqbuIg_5g/edit?usp=sharing
+1205修改：
+1. 把model的file name跟變數名稱改成跟database相同
+2. 修改seed.js內測試資料
+3. CTManagementController.js裡的workerIDs改成陣列
+4. crew_members.js的worker_id改成自動增加(假設船長已經內建在資料庫且id = 0)
+
+1203修改：
+1. CT api1修改
+3. login password 修改為 pattern
+4. WorkerPageController api2修改，本來使用舊版格式
+5. WorkerPageController api4新增預設check=1 (所以Report表中的check是啥?)

@@ -45,7 +45,7 @@ async function initializeDatabase(sqlFilePath) {
     const statements = sql.split(';').map(stmt => stmt.trim()).filter(Boolean);
     
     for (const statement of statements) {
-      await sequelize.query(statement);
+      await sequelizeNew.query(statement);
     }
 
     console.log('資料庫初始化完成！');

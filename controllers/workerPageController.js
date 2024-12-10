@@ -64,12 +64,22 @@ const getMonthlyCalender = async (req, res) => {
 
 // API 3: 簽名確認工作內容
 const signToCheck = async (req, res) => {
-  const { worker_id, date, signature } = req.body;
+  const { worker_id, date } = req.body;
 
   // 檢查參數
-  if (!worker_id || !date || !signature) {
+  if (!worker_id || !date ) {
     return res.status(400).json({ message: '缺少必要的參數', status: 0 });
   }
+
+  // 檢查是否有圖片檔案
+  if (!req.file) {
+    return res.status(400).json({ message: '缺少簽名圖片', status: 0 });
+  }
+
+  // 顯示檔案資訊
+  console.log(req.file);  // 查看圖片資訊
+
+  const signaturePath = `/uploads/signature/${req.file.filename}`; // 取得圖片檔案的儲存路徑
 
   try {
     // 找到指定日期的報告
@@ -85,8 +95,9 @@ const signToCheck = async (req, res) => {
     }
 
     // 更新報告的簽名
-    oemo.signaturePhoto = signature;
+    oemo.signaturePhoto = signaturePath; // 儲存圖片的 URL 或路徑
     oemo.check = true;
+    console.log(oemo);  // 確認簽名圖片 URL 是否正確
     await oemo.save();
 
     res.json({ message: '工作內容已確認', status: 1 });

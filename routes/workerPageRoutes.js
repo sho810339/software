@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const uploadSignature = require('../middlewares/uploadSignature'); // 引入上傳簽名的中介軟體
 
 const { 
     getAllWorker, 
@@ -16,7 +17,7 @@ router.get('/workers', getAllWorker);
 router.get('/calendar/:worker_id/:year/:month', getMonthlyCalender);
 
 // API 3: 簽名確認工作內容
-router.post('/oemo', signToCheck);
+router.post('/oemo', uploadSignature, signToCheck);
 
 // API 4: 提交工作異常報告
 router.post('/newReport', reportAbnormality);

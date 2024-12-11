@@ -27,7 +27,7 @@ router.post('/add-worker', uploadProfile.single('profilePhoto'), addWorker);
 router.put('/:worker_id', updateWorker);
 
 // api4:更新船員部分資料
-router.patch('/:worker_id', patchWorker);
+router.patch('/:worker_id', uploadProfile.single('profilePhoto'), patchWorker);
 
 // api5:查詢單一船員所有資料
 router.get('/:worker_id', getWorker);

@@ -229,6 +229,10 @@ const patchWorker = async (req, res) => {
   const { worker_id } = req.params; // 獲取 URL 中的 worker_id
   const updates = req.body; // 從請求主體中獲取需要更新的數據
 
+  if (req.file) {
+    updates.profilePhoto = req.file.path; // 使用 Multer 上傳後的文件路徑
+  }
+	
   //檢查更新數據是否為空
   if (!Object.keys(req.body).length) {
     return res.status(400).json({

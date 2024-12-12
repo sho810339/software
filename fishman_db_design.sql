@@ -1,3 +1,8 @@
+-- DROP DATABASE `fisherman`;
+-- CREATE DATABASE `fisherman`;
+-- USE fisherman;
+-- SHOW TABLES;
+
 CREATE TABLE IF NOT EXISTS `crew_members` (
     `worker_id` INT PRIMARY KEY NOT NULL,  -- 員工編號，船長為0
     `name` VARCHAR(100) NOT NULL, -- 名

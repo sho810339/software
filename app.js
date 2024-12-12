@@ -1,3 +1,4 @@
+require('dotenv').config();  // 這行會讀取根目錄中的 .env 檔案
 const express = require('express');
 // const cors = require('cors');
 const path = require('path');

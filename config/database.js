@@ -80,7 +80,7 @@ async function seedInitialData() {
         country: 'USA',
         passport_number: 'A12345678',
         job_title: 'captain',
-        profilePhoto: '../uploads/profile/test.heic',
+        profilePhoto: 'uploads\\profile\\captain.jpg',
       },
     ];
 

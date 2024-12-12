@@ -33,6 +33,10 @@ API對照表：
 輸入對應api就可以使用功能ㄌ
 https://docs.google.com/spreadsheets/d/1XCQsYwHWfLbnaOu_gorcbwlN0wf5KYy-0DAqbuIg_5g/edit?usp=sharing
 
+1212公告：
+database root的密碼改成Password@123喔
+在.env裡面
+
 1208測試流程：
 1.直接跑app.js就可以蓋好資料庫
 2.用下面的API對照表測api功能

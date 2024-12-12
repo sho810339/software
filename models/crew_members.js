@@ -42,7 +42,7 @@ const Worker = sequelize.define('Worker', {
     comment: '護照號碼',
   },
   job_title: {
-    type: DataTypes.ENUM('engineer', 'fisherman', 'fish processor', 'deckhand', 'chef'),
+    type: DataTypes.ENUM('engineer', 'fisherman', 'fish processor', 'deckhand', 'chef', 'captain'),
     allowNull: false, // 必填
     comment: '工種',
   },

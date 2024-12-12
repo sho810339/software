@@ -17,7 +17,12 @@ const app = express();
 
 // 中間件
 app.use(express.json());
- 
+
+app.use((req, res, next) => {
+  console.log(`收到請求: ${req.method} ${req.url}`);
+  next();
+});
+
 // 路由設定
 app.use('/api/CTManagementPage', CTManagementPageRoutes);
 app.use('/api/loginPage', loginPageRoutes);
@@ -46,7 +51,7 @@ const PORT = 3000;
     console.log('插入初始資料成功！');
 
     // 啟動伺服器
-    app.listen(PORT, () => {
+    app.listen(PORT,'0.0.0.0',  () => {
       console.log(`伺服器正在執行，監聽 port ${PORT}`);
     });
   } catch (error) {

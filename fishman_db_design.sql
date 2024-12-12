@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `work_hours` (
     `date` DATE NOT NULL, -- 日期
     `status` VARCHAR(50), -- 狀態，0=休息, 1=工作, 2=吃飯
     `duration` INT NOT NULL, -- 時長，幾個半小時
-    `profilePhoto` VARCHAR(255) NOT NULL, -- 大頭照
+    `profilePhoto` VARCHAR(255), -- 大頭照
     `signaturePhoto` VARCHAR(255), -- 簽名照片
     `check` TINYINT(1) NOT NULL,
     `comments` VARCHAR(255), -- 備註，儲存身體狀態或加班等描述

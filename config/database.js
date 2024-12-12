@@ -63,28 +63,43 @@ async function initializeDatabase(sqlFilePath) {
 // 插入初始資料
 async function seedInitialData() {
   try {
-    const Worker = require('../models/crew_members'); // 假設您有 crew_members 模型
+    const Worker = require('../models/crew_members');
+    const Login = require('../models/user_login');
+    const captainWorker = {
+      worker_id: 0,
+      name: 'Captain Jack',
+      age: 40,
+      country: 'USA',
+      passport_number: 'A12345678',
+      job_title: 'captain',
+      profilePhoto: 'uploads/profile/captain.jpg',
+    };
+    
+    // 初始化登入資料（僅插入船長的登入資料）
+    const captainLogin = {
+      username: 'Captain Jack',
+      worker_id: 0,
+      pattern: '12345',
+      role: 'captain',
+      login_timestamp: new Date(),
+      last_login: '2024-12-01',
+      language: 'en-US',
+      login_attempts: 0,
+    };
+    // 插入船員資料
+    await Worker.findOrCreate({
+      where: { passport_number: captainWorker.passport_number },
+      defaults: captainWorker,
+    });
 
-    const initialWorkers = [
-      {
-        worker_id: 0,
-        name: 'Captain Jack',
-        age: 40,
-        country: 'USA',
-        passport_number: 'A12345678',
-        job_title: 'captain',
-        profilePhoto: 'uploads/profile/captain.jpg',
-      },
-    ];
+    // 插入登入資料
+    await Login.findOrCreate({
+      where: { username: captainLogin.username },
+      defaults: captainLogin,
+    });
 
-      for (const worker of initialWorkers) {
-        await Worker.findOrCreate({
-          where: { passport_number: worker.passport_number },
-          defaults: worker,
-        });
-      }
       console.log('初始資料插入成功！');
-    } catch (error) {
+  } catch (error) {
       console.error('插入初始資料失敗:', error);
   }
 }

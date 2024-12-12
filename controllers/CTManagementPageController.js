@@ -86,10 +86,11 @@ const registerWorkHours = async (req, res) => {
             // 查詢 worker_id 對應的 profilePhoto
             const worker = await Worker.findOne({
                 where: { worker_id: workerId },
-                attributes: ['profilePhoto'] // 只選擇需要的欄位
+                attributes: ['profilePhoto'], // 只選擇需要的欄位
+                raw: true
             });
 
-            const profilePhoto = worker ? worker.profilePhoto : null;  // 如果找到了員工，獲取照片，否則為 null
+            const profilePhoto = worker && worker.profilePhoto ? worker.profilePhoto : null;
             
             await Attendance.upsert({
                 worker_id: workerId,

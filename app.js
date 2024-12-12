@@ -54,6 +54,10 @@ const PORT = 3000;
     app.listen(PORT,'0.0.0.0',  () => {
       console.log(`伺服器正在執行，監聽 port ${PORT}`);
     });
+
+    console.log('Environment:', process.env.NODE_ENV || 'development');
+    console.log('Server running on:', process.env.DB_HOST || 'localhost');
+
   } catch (error) {
     console.error('應用程式初始化失敗:', error);
     process.exit(1);

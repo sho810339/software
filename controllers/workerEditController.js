@@ -156,74 +156,6 @@ const addWorker = async (req, res) => {
   }
 };
 
-
-// api4：編輯員工全部資料
-const updateWorker = async (req, res) => {
-  const { worker_id } = req.params; // 獲取動態參數 worker_id
-  const updates = req.body; // 獲取需要更新的數據
-
-  // 定義可更新的有效欄位
-  const validFields = ['name', 'age', 'country', 'passport_number', 'job_title', 'profilePhoto'];
-  
-  // 檢查是否有不合法的欄位
-  const invalidFields = Object.keys(updates).filter(field => !validFields.includes(field));
-
-  if (invalidFields.length) {
-    return res.status(400).json({
-      error: `不允許更新以下欄位: ${invalidFields.join(', ')}`,
-      details: '請檢查請求中的欄位，並移除無效欄位。',
-    });
-  }
-
-  // 檢查數據是否完整
-  const requiredFields = ['name', 'age', 'country', 'passport_number', 'job_title'];
-  const missingFields = requiredFields.filter((field) => !(field in updates));
-
-  if (missingFields.length) {
-    return res.status(400).json({
-      error: `PUT 請求缺少必要字段: ${missingFields.join(', ')}`,
-    });
-  }
-
-  try {
-    // 確認該員工是否存在
-    const worker = await Worker.findByPk(worker_id);
-
-    if (!worker) {
-      return res.status(404).json({ error: '找不到該員工，無法更新' });
-    }
-
-    // 更新員工資料
-    const result = await Worker.update(updates, {
-      where: { worker_id },
-    });
-
-    // 檢查更新是否成功
-    if (result[0] === 0) {
-      return res.status(400).json({
-        error: '更新失敗，請檢查提交的數據',
-        updatedFields: updates,
-      });
-    }
-
-    // 返回成功訊息
-    const updatedWorker = await Worker.findByPk(worker_id);
-
-    res.status(200).json({
-      message: `員工 ID 為 ${worker_id} 的資料已成功更新`,
-      worker: updatedWorker,
-    });
-
-  } catch (error) {
-    console.error('更新員工資料失敗', error.errors || error.message); // 錯誤日誌
-    res.status(500).json({ 
-      error: '無法更新員工資料',
-      message: error.message,
-     });
-  }
-};
-
-
 // api4：編輯船員部分資料
 const patchWorker = async (req, res) => {
   const { worker_id } = req.params; // 獲取 URL 中的 worker_id
@@ -306,9 +238,17 @@ const patchWorker = async (req, res) => {
 // api5：查詢單一船員
 const getWorker = async (req, res) => {
   const { worker_id } = req.params;
+
+  // 檢查 worker_id 是否為有效的數字
+  if (!/^\d+$/.test(worker_id)) {
+    return res.status(400).json({
+      error: 'worker_id 無效',
+      message: `傳入的 worker_id (${worker_id}) 不是有效的數字，請確認輸入是否正確。`,
+    });
+  }
+
   try {
     const worker = await Worker.findByPk(worker_id);
-
     // 如果查不到船員，返回 404
     if (!worker) {
       return res.status(404).json({
@@ -376,8 +316,7 @@ const deleteWorker = async (req, res) => {
 module.exports = { 
 	getProfile, 
 	getWorkersByJobTitle, 
-	addWorker, 
-	updateWorker, 
+	addWorker,  
 	patchWorker, 
 	getWorker, 
 	deleteWorker

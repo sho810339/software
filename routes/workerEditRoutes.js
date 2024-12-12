@@ -6,7 +6,6 @@ const {
     getProfile, 
 	getWorkersByJobTitle, 
 	addWorker, 
-	updateWorker, 
 	patchWorker, 
 	getWorker, 
 	deleteWorker
@@ -22,9 +21,6 @@ router.get('/get-by-job', getWorkersByJobTitle);
 
 // api3:新增船員路由
 router.post('/add-worker', uploadProfile.single('profilePhoto'), addWorker);
-
-// api4:編輯員工資料的路由 
-router.put('/:worker_id', updateWorker);
 
 // api4:更新船員部分資料
 router.patch('/:worker_id', uploadProfile.single('profilePhoto'), patchWorker);

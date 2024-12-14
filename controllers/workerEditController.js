@@ -1,6 +1,6 @@
 const { sequelize } = require('../config/database'); 
 const Worker = require('../models/crew_members');
-
+const { Op } = require('sequelize');
 
 // api1()：查詢船員簡易資訊
 const getProfile = async (req, res) => {
@@ -8,6 +8,11 @@ const getProfile = async (req, res) => {
     // 查詢所有船員的簡易資料（worker_id, name, profilePhoto）
     const workers = await Worker.findAll({
       attributes: ['worker_id', 'name', 'profilePhoto'],
+      where: {
+	      worker_id:{
+		      [Op.ne]: 0,
+	      },
+      },
     });
     
 

@@ -1,11 +1,20 @@
 const Attendance = require('../models/work_hours'); // 出勤記錄模型
 const Worker = require('../models/crew_members'); // 船員模型
 const Notification = require('../models/notification'); // 載入通知模型
+const { sequelize } = require('../config/database'); 
+const { Op } = require('sequelize');
 
 // api1()：在開啟app時取得員工資料(不含員工當日工時)	
 const getEmployees = async (req, res) => {
     try {
-        const employees = await Worker.findAll(); // 查詢所有員工資料，包含所有欄位
+        // 查詢所有員工資料，排除 worker_id = 0 的資料
+        const employees = await Worker.findAll({
+            where: {
+                worker_id:{
+                    [Op.ne]: 0,
+                },
+            },
+        });
         res.json(employees); // 回傳所有員工資料
     } catch (error) {
         res.status(500).json({ message: '伺服器錯誤', error: error.message });

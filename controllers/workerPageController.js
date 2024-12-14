@@ -1,3 +1,4 @@
+const { sequelize } = require('../config/database'); 
 const { Op } = require('sequelize');
 const Report = require('../models/report');
 const Worker = require('../models/crew_members');
@@ -7,7 +8,13 @@ const { createReportNotification } = require('./CTManagementPageController');
 // API 1: 獲取所有船員的基本資訊
 const getAllWorker = async (req, res) => {
   try {
-    const workers = await Worker.findAll();
+    const workers = await Worker.findAll({
+      where: {
+	      worker_id:{
+		      [Op.ne]: 0,
+	      },
+      },
+    });
     res.json(workers);
   } catch (error) {
     console.error(error);

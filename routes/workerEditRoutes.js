@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const uploadProfile = require('../middlewares/uploadProfile'); // 引入上傳中間件
+const convertImage = require('../middlewares/convertImage');
 
 const { 
     getProfile, 
@@ -20,7 +21,7 @@ router.get('/profiles', getProfile);
 router.get('/get-by-job', getWorkersByJobTitle);
 
 // api3:新增船員路由
-router.post('/add-worker', uploadProfile.single('profilePhoto'), addWorker);
+router.post('/add-worker', uploadProfile.single('profilePhoto'), convertImage, addWorker);
 
 // api4:更新船員部分資料
 router.patch('/:worker_id', uploadProfile.single('profilePhoto'), patchWorker);

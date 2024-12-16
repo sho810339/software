@@ -253,7 +253,12 @@ const getWorker = async (req, res) => {
   }
 
   try {
-    const worker = await Worker.findByPk(worker_id);
+    const worker = await Worker.findByPk(worker_id, {
+      include: {
+        model: user_login,
+        attributes: ['pattern'], // 只選擇 pattern 欄位
+      },
+    });
     // 如果查不到船員，返回 404
     if (!worker) {
       return res.status(404).json({
@@ -262,8 +267,19 @@ const getWorker = async (req, res) => {
       });
     }
 
-    // 返回船員資料
-    res.json(worker);
+    // 組合返回資料，包含 Worker 和 pattern
+    const result = {
+      worker_id: worker.worker_id,
+      name: worker.name,
+      age: worker.age,
+      country: worker.country,
+      passport_number: worker.passport_number,
+      job_title: worker.job_title,
+      profilePhoto: worker.profilePhoto,
+      pattern: worker.Login ? worker.Login.pattern : null, // 如果有對應的 Login 資料，返回 pattern
+    };
+
+    res.json(result);
 
   } catch (error) {
     console.error('無法查詢船員資料', error.errors || error.message); // 顯示具體錯誤

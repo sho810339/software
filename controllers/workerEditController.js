@@ -179,7 +179,7 @@ const patchWorker = async (req, res) => {
   }
 
   // 定義可以更新的字段，防止其他不必要的字段被更新
-  const allowedFields = ['name', 'age', 'country', 'passport_number', 'job_title', 'profilePhoto'];
+  const allowedFields = ['name', 'age', 'country', 'passport_number', 'job_title', 'profilePhoto', 'pattern'];
 
   // 過濾掉不允許的字段
   const filteredUpdates = {};

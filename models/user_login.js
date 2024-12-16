@@ -22,7 +22,7 @@ const Login = sequelize.define('Login', {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
-      isIn: [['captain', 'worker']]
+      isIn: [['captain', 'fisherman']]
     },
     comment: '使用者角色，可能是船長 (captain) 或漁工 (fisherman)'
   },

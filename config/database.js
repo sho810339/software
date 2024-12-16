@@ -75,6 +75,16 @@ async function seedInitialData() {
       profilePhoto: 'uploads/profile/captain.jpg',
     };
     
+    const workerLoginWorker = {
+      worker_id: 10,
+      name: 'Trump',
+      age: 40,
+      country: 'USA',
+      passport_number: 'A4561856856',
+      job_title: 'chef',
+      profilePhoto: null,
+    };
+
     // 初始化登入資料（僅插入船長的登入資料）
     const captainLogin = {
       username: 'Captain Jack',
@@ -86,16 +96,38 @@ async function seedInitialData() {
       language: 'en-US',
       login_attempts: 0,
     };
+    
+    const workerLogin = {
+      username: 'Trump',
+      worker_id: 10,
+      pattern: '54321',
+      role: 'fisherman',
+      login_timestamp: new Date(),
+      last_login: '2024-12-01',
+      language: 'en-US',
+      login_attempts: 0,
+    };
+    
     // 插入船員資料
     await Worker.findOrCreate({
       where: { passport_number: captainWorker.passport_number },
       defaults: captainWorker,
+    });
+    // 插入船員資料
+    await Worker.findOrCreate({
+      where: { passport_number: workerLoginWorker.passport_number },
+      defaults: workerLoginWorker,
     });
 
     // 插入登入資料
     await Login.findOrCreate({
       where: { username: captainLogin.username },
       defaults: captainLogin,
+    });
+    // 插入登入資料
+    await Login.findOrCreate({
+      where: { username: workerLogin.username },
+      defaults: workerLogin,
     });
 
       console.log('初始資料插入成功！');

@@ -7,14 +7,16 @@ const { createReportNotification } = require('./CTManagementPageController');
 
 // API 1: 獲取所有船員的基本資訊
 const getAllWorker = async (req, res) => {
+  const { worker_id } = req.params;
   try {
-    const workers = await Worker.findAll({
+    const workers = await Worker.findOne({
       where: {
-	      worker_id:{
-		      [Op.ne]: 0,
-	      },
+	      worker_id: worker_id,
       },
     });
+    if (!worker) {
+      return res.status(404).json({ message: `找不到 ID 為 ${worker_id} 的船員` });
+    }
     res.json(workers);
   } catch (error) {
     console.error(error);

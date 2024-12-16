@@ -1,6 +1,6 @@
 const { sequelize } = require('../config/database'); 
 const Worker = require('../models/crew_members');
-const Login = require('../models/login');
+const Login = require('../models/user_login');
 const { Op } = require('sequelize');
 
 // api1()：查詢船員簡易資訊

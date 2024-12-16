@@ -1,5 +1,6 @@
 const { sequelize } = require('../config/database'); 
 const Worker = require('../models/crew_members');
+const Login = require('../models/login');
 const { Op } = require('sequelize');
 
 // api1()：查詢船員簡易資訊
@@ -210,16 +211,37 @@ const patchWorker = async (req, res) => {
       });
     }
 
+    //區別是要改worker還login
+    const loginUpdates = {};
+    const workerUpdates = {};
+    for (let key in filteredUpdates) {
+      if (key === 'pattern') {
+        loginUpdates[key] = filteredUpdates[key];
+      } else {
+        workerUpdates[key] = filteredUpdates[key];
+      }
+    }
+
     // 更新員工的部分資料
-    await Worker.update(updates, {
-      where: { worker_id },
-    });
+    if (Object.keys(workerUpdates).length) {
+      await Worker.update(workerUpdates, {
+        where: { worker_id },
+      });
+    }
+    
+    if (Object.keys(loginUpdates).length) {
+      await Login.update(loginUpdates, {
+        where: { worker_id },
+      });
+    }
 
     // 返回成功響應，並可選擇重新查詢更新後的數據返回
     const updatedWorker = await Worker.findByPk(worker_id);
+    const updatedLogin = await Login.findOne({ where: { worker_id } });
     res.status(200).json({
       message: `員工 ID 為 ${worker_id} 的資料已成功更新`,
       worker: updatedWorker,
+      login: updatedLogin,
     });
 
   } catch (error) {

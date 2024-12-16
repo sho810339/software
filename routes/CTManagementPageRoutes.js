@@ -8,7 +8,8 @@ const {
     registerWorkHours,
     getNotificationCount,
     getNotifications,
-    cancelNotification
+    cancelNotification,
+    checkWorkHours
 } = require('../controllers/CTManagementPageController'); // 假設控制器檔案名為 CTManagementController.js
 
 // api1：在開啟app時取得員工資料(不含員工當日工時)
@@ -28,5 +29,8 @@ router.get('/notifications', getNotifications);
 
 // api6：取消指定的通知
 router.delete('/cancel-notification/:index', cancelNotification);
+
+// api7：確認某天某船員是否有登記工時
+router.post('/check-work-hours', checkWorkHours);
 
 module.exports = router;

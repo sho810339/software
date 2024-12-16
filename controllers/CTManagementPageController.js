@@ -202,6 +202,46 @@ const cancelNotification = async (req, res) => {
     }
 };
 
+// api7(worker_id, date)：確認某天是否有登記工時
+const checkWorkHours = async (req, res) => {
+    const { worker_id, date } = req.body; // 接收 worker_id 和日期
+
+    try {
+        // 驗證日期格式是否正確
+        const isValidDate = /^\d{4}-\d{2}-\d{2}$/.test(date);
+        if (!isValidDate) {
+            return res.status(400).json({ message: '無效的日期格式，必須為 YYYY-MM-DD' });
+        }
+
+        // 確認 worker_id 是否存在
+        const worker = await Worker.findByPk(worker_id);
+        if (!worker) {
+            return res.status(404).json({ message: `無效的 worker_id: ${worker_id}` });
+        }
+
+        // 查詢該船員在指定日期的工時記錄
+        const attendanceRecord = await Attendance.findOne({
+            where: { worker_id, date },
+            attributes: ['worker_id', 'date', 'status'] // 只選取需要的欄位
+        });
+
+        if (!attendanceRecord) {
+            // 未登記
+            return res.json({ 
+                status: 0 // 0 表示未登記
+            });
+        }
+
+        // 已登記
+        return res.json({ 
+            status: 1 // 1 表示已登記
+        });
+    } catch (error) {
+        console.error('錯誤詳細資訊:', error);
+        res.status(500).json({ message: '伺服器錯誤', error: error.message });
+    }
+};
+
 
 const createReportNotification = async (worker_id, issue_description) => {
     try {
@@ -229,5 +269,6 @@ module.exports = {
     getNotificationCount,
     getNotifications,
     cancelNotification,
-    createReportNotification
+    createReportNotification,
+    checkWorkHours
 };

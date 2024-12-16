@@ -82,7 +82,7 @@ const getWorkersByJobTitle = async (req, res) => {
 
 // api3：新增員工
 const addWorker = async (req, res) => {
-  const { name, age, country, passport_number, job_title } = req.body;
+  const { name, age, country, passport_number, job_title, pattern } = req.body;
   console.log(req.body);
   const profilePhoto = req.file ? req.file.path : null; // 上傳文件的路徑
   if (Array.isArray(req.body)) {
@@ -93,7 +93,7 @@ const addWorker = async (req, res) => {
   }
 
   // 驗證輸入資料
-  if (!name || !age || !country || !passport_number || !job_title) {
+  if (!name || !age || !country || !passport_number || !job_title || !pattern) {
     return res.status(400).json({
       error: '缺少必要的字段',
       missingFields: {
@@ -101,8 +101,9 @@ const addWorker = async (req, res) => {
         age: !age,
         country: !country,
         passport_number: !passport_number,
-        job_title: !job_title
-      }
+        job_title: !job_title,
+        pattern: !pattern,
+      },
     });
   }
 
@@ -135,10 +136,27 @@ const addWorker = async (req, res) => {
 
     const newWorkerId = (maxWorker.maxWorkerId || 0) + 1;
 
-    //新增
-    const newWorker = await Worker.create({ worker_id: newWorkerId, name, age, country, passport_number, job_title , profilePhoto});
-
+    // 新增 Worker
+    const newWorker = await Worker.create({
+        worker_id: newWorkerId,
+        name,
+        age,
+        country,
+        passport_number,
+        job_title,
+        profilePhoto,
+    });
     res.json({ message: '新增船員成功', newWorker });
+    // 新增對應的 UserLogin
+    const newAccount = await Login.create({
+        username: name,
+        worker_id: newWorkerId,
+        pattern: pattern, // 假設 password 欄位用於存儲九宮格密碼
+        role: 'fisherman', // 默認角色為 worker
+    });
+    
+    res.json({ message: '新增船員帳號成功', newAccount });
+    
 
   } catch (error) {
     console.error('新增船員失敗:', error.errors || error.message); // 顯示具體錯誤

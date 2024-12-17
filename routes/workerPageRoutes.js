@@ -11,7 +11,7 @@ const {
 
 
 // API 1: 獲取所有船員的基本資訊
-router.get('/workers', getAllWorker);
+router.get('/workers/:worker_id', getAllWorker);
 
 // API 2: 獲取月曆每一天的工作情況
 router.get('/calendar/:worker_id/:year/:month', getMonthlyCalender);

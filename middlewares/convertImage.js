@@ -3,7 +3,9 @@ const path = require('path');   // 路徑模組，用於解析與操作檔案路
 
 const convertImage = async (req, res, next) => {
   if (!req.file) {
-    return next(new Error('沒有上傳檔案'));
+    // 如果沒有上傳檔案，直接繼續後續處理
+    console.log('沒有上傳檔案，跳過圖片轉換');
+    return next();
   }
 
   const inputPath = req.file.path; // 上傳的檔案路徑

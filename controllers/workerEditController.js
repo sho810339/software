@@ -292,12 +292,12 @@ const getWorker = async (req, res) => {
   }
 
   try {
-    // const worker = await Worker.findByPk(worker_id);
-    const worker = await Login.findOne({
-      where: { worker_id: worker_id },
-      attributes: ['pattern'], // 只選擇需要的欄位
-      raw: true
-    });
+    const worker = await Worker.findByPk(worker_id);
+    // const worker = await Login.findOne({
+    //   where: { worker_id: worker_id },
+    //   attributes: ['pattern'], // 只選擇需要的欄位
+    //   raw: true
+    // });
     
     // 如果查不到船員，返回 404
     if (!worker) {
@@ -315,8 +315,7 @@ const getWorker = async (req, res) => {
      country: worker.country,
      passport_number: worker.passport_number,
      job_title: worker.job_title,
-     profilePhoto: worker.profilePhoto,
-     pattern: worker.pattern, // 如果有對應的 Login 資料，返回 pattern
+     profilePhoto: worker.profilePhoto
     };
 
     res.json(result);

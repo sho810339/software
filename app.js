@@ -1,6 +1,6 @@
 require('dotenv').config();  // 這行會讀取根目錄中的 .env 檔案
 const express = require('express');
-// const cors = require('cors');
+const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const { sequelize, initializeDatabase, seedInitialData } = require('./config/database'); // 資料庫連線設定
@@ -13,7 +13,7 @@ const workerPageRoutes = require('./routes/workerPageRoutes');
 const app = express();
 
 // 使用 CORS
-// app.use(cors());
+app.use(cors());
 
 // 中間件
 app.use(express.json());

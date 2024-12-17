@@ -154,7 +154,7 @@ const addWorker = async (req, res) => {
         role: 'fisherman', // 默認角色為 worker
     });
     
-    res.json({ message: '新增船員帳號成功', newAccount });
+    res.json({ message: '新增船員帳號成功', newWorker, newAccount });
     
 
   } catch (error) {
@@ -292,13 +292,12 @@ const getWorker = async (req, res) => {
   }
 
   try {
-    const worker = await Worker.findByPk(worker_id);
-    //const worker = await Worker.findByPk(worker_id, {
-    //  include: {
-    //    model: user_login,
-    //    attributes: ['pattern'], // 只選擇 pattern 欄位
-    //  },
-    //});
+    // const worker = await Worker.findByPk(worker_id);
+    const worker = await Login.findOne({
+      where: { worker_id: worker_id },
+      attributes: ['pattern'], // 只選擇需要的欄位
+      raw: true
+    });
     
     // 如果查不到船員，返回 404
     if (!worker) {
@@ -308,20 +307,19 @@ const getWorker = async (req, res) => {
       });
     }
 
-    res.json(worker)
     // 組合返回資料，包含 Worker 和 pattern
-    //const result = {
-    //  worker_id: worker.worker_id,
-    //  name: worker.name,
-    //  age: worker.age,
-    //  country: worker.country,
-    //  passport_number: worker.passport_number,
-    //  job_title: worker.job_title,
-    //  profilePhoto: worker.profilePhoto,
-    //  pattern: worker.Login ? worker.Login.pattern : null, // 如果有對應的 Login 資料，返回 pattern
-    //};
+    const result = {
+     worker_id: worker.worker_id,
+     name: worker.name,
+     age: worker.age,
+     country: worker.country,
+     passport_number: worker.passport_number,
+     job_title: worker.job_title,
+     profilePhoto: worker.profilePhoto,
+     pattern: worker.pattern, // 如果有對應的 Login 資料，返回 pattern
+    };
 
-    //res.json(result);
+    res.json(result);
 
   } catch (error) {
     console.error('無法查詢船員資料', error.errors || error.message); // 顯示具體錯誤

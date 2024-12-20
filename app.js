@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const sequelize = require('./config/database'); // 資料庫連線
+const path = require('path');
 
 const CTManagementPageRoutes = require('./routes/CTManagementPageRoutes');
 const loginPageRoutes = require('./routes/loginPageRoutes');
@@ -18,6 +19,9 @@ app.use('/api/CTManagementPage', CTManagementPageRoutes);
 app.use('/api/loginPage', loginPageRoutes);
 app.use('/api/workerEdit', workerEditRoutes);
 app.use('/api/workerPage', workerPageRoutes);
+
+// 設定靜態資源目錄，uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // 測試資料庫連線
 sequelize.authenticate()

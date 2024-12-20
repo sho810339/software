@@ -296,8 +296,18 @@ const getWorker = async (req, res) => {
       });
     }
 
+    // 生成完整的圖片 URL
+    const imageUrl = `${req.protocol}://${req.get('host')}${worker.profilePhoto}`;
+
     // 返回船員資料
-    res.json(worker);
+    res.json({
+      worker_id: worker.worker_id,
+      name: worker.name,
+      country: worker.country,
+      passport_number: worker.passport_number,
+      job_title: worker.job_title,
+      profilePhoto: imageUrl, // 返回完整的圖片 URL
+    });
 
   } catch (error) {
     console.error('無法查詢船員資料', error.errors || error.message); // 顯示具體錯誤

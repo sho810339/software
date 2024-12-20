@@ -307,6 +307,10 @@ const getWorker = async (req, res) => {
       });
     }
 
+    // 生成完整的圖片 URL
+    const imageUrl = `${req.protocol}://${req.get('host')}${worker.profilePhoto}`;
+
+
     // 組合返回資料，包含 Worker 和 pattern
     const result = {
      worker_id: worker.worker_id,
@@ -315,7 +319,7 @@ const getWorker = async (req, res) => {
      country: worker.country,
      passport_number: worker.passport_number,
      job_title: worker.job_title,
-     profilePhoto: worker.profilePhoto
+     profilePhoto: imageUrl,
     };
 
     res.json(result);

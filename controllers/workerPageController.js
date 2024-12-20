@@ -9,7 +9,7 @@ const { createReportNotification } = require('./CTManagementPageController');
 const getAllWorker = async (req, res) => {
   const { worker_id } = req.params;
   try {
-    const workers = await Worker.findOne({
+    const worker = await Worker.findOne({
       where: {
 	      worker_id: worker_id,
       },
@@ -17,7 +17,19 @@ const getAllWorker = async (req, res) => {
     if (!worker) {
       return res.status(404).json({ message: `找不到 ID 為 ${worker_id} 的船員` });
     }
-    res.json(workers);
+
+    // 生成完整的圖片 URL
+    const imageUrl = `${req.protocol}://${req.get('host')}${worker.profilePhoto}`;
+
+    res.json({
+      worker_id: worker.worker_id,
+      name: worker.name,
+      country: worker.country,
+      passport_number: worker.passport_number,
+      job_title: worker.job_title,
+      profilePhoto: imageUrl, // 返回完整的圖片 URL
+    });
+	  
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: '取得船員資訊失敗' });

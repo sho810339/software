@@ -29,6 +29,9 @@ app.use('/api/loginPage', loginPageRoutes);
 app.use('/api/workerEdit', workerEditRoutes);
 app.use('/api/workerPage', workerPageRoutes);
 
+// 設定靜態資源目錄"uploads"
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // 啟動伺服器
 const PORT = 3000;
 
